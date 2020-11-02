@@ -32,13 +32,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future getJokes() async {
     http.Response response;
-    response = await http
-        .get('https://sv443.net/jokeapi/v2/joke/Any?type=single&amount=10');
-
+    response = await http.get('api');
+//https://www.googleapis.com/books/v1/volumes?q=isbn:0747532699
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = json.decode(response.body);
-        ljokes = mapResponse['jokes'];
+        ljokes = mapResponse['items'];
         debugPrint(ljokes.toString());
         print(ljokes);
         print(mapResponse);
@@ -71,8 +70,73 @@ class _MyHomePageState extends State<MyHomePage> {
                   return Container(
                     child: Column(
                       children: <Widget>[
-                        Text(ljokes[index]['joke'],
-                            style: TextStyle(fontSize: 20))
+                        Text(
+                          "Book Title",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(ljokes[index]['volumeInfo']['title'].toString(),
+                            style: TextStyle(fontSize: 20)),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(ljokes[index]['volumeInfo']['authors'].toString(),
+                            style: TextStyle(fontSize: 20)),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Publisher",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          ljokes[index]['volumeInfo']['publisher'].toString(),
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Published Date",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          ljokes[index]['volumeInfo']['publishedDate']
+                              .toString(),
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Description",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          ljokes[index]['volumeInfo']['description'].toString(),
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Book Link",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          ljokes[index]['selfLink'].toString(),
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        )
                       ],
                     ),
                   );
